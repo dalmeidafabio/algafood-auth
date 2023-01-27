@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
 @EnableAuthorizationServer
@@ -32,7 +33,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.withClient("app-mobile")
 				.secret(passwordEncoder.encode("abc123"))
 				.authorizedGrantTypes("password")
-				.scopes("write", "read");			
+				.scopes("write", "read");
+	}
+	
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		//Define quem pode acessar o endpoint de Check_Token
+		
+		//security.checkTokenAccess("permitAll"); //Permite tudo
+		security.checkTokenAccess("isAuthenticated"); //Quem estiver autenticado pode checar token
 	}
 	
 	@Override
