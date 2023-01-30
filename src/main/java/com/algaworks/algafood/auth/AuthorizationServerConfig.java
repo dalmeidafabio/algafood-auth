@@ -34,6 +34,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes("write", "read")
 				.accessTokenValiditySeconds(60*60*6) //6 horas (o poadrão é 12h)
 				.refreshTokenValiditySeconds(60 * 60 * 24) //1 dia
+				
+			.and()
+				.withClient("faturamento") //apenas exemplo de uma aplicação backend que acessa o AlgaFood
+				.secret(passwordEncoder.encode("faturamento123"))
+				.authorizedGrantTypes("client_credentials")
+				.scopes("write", "read")
+				
 			.and()
 				.withClient("checktoken")
 				.secret(passwordEncoder.encode("check123"));
