@@ -1,6 +1,5 @@
 package com.algaworks.algafood.auth;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -20,8 +19,9 @@ public class CorsConfig {
 		
 		config.setAllowCredentials(true);
 		
-		config.setAllowedOrigins(Arrays.asList("/*"));
-		//config.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5500"));
+		//config.setAllowedOrigins(Arrays.asList("/*"));
+		//config.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5500/*"));
+		config.setAllowedOriginPatterns(Collections.singletonList("http://**"));
 		
 		config.setAllowedMethods(Collections.singletonList("*"));
 		config.setAllowedHeaders(Collections.singletonList("*"));
