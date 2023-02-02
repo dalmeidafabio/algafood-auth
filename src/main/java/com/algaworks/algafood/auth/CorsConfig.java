@@ -18,15 +18,9 @@ public class CorsConfig {
 		CorsConfiguration config = new CorsConfiguration();
 		
 		config.setAllowCredentials(true);
-		
-		//config.setAllowedOrigins(Arrays.asList("/*"));
-		//config.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5500/*"));
 		config.setAllowedOriginPatterns(Collections.singletonList("http://**"));
-		
 		config.setAllowedMethods(Collections.singletonList("*"));
 		config.setAllowedHeaders(Collections.singletonList("*"));
-		
-		
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/oauth/token", config);
