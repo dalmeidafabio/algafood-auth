@@ -71,8 +71,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		//Define quem pode acessar o endpoint de Check_Token
 		
-		//security.checkTokenAccess("permitAll"); //Permite tudo
-		security.checkTokenAccess("isAuthenticated"); //Quem estiver autenticado pode checar token
+		security.checkTokenAccess("permitAll") //Permite tudo
+		//security.checkTokenAccess("isAuthenticated") //Quem estiver autenticado pode checar token
+			.allowFormAuthenticationForClients();
 	}
 	
 	@Override
