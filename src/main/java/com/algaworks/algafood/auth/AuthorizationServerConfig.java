@@ -30,7 +30,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
-	private UserDetailsService userDetailsService; 
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private JwtKeyStoreProperties jwtKeyStoreProperties;
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -95,11 +98,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		//jwtAccessTokenConverter.setSigningKey("ijh5o23jh4o5inuh2345iun354nh3458hn12543198h4329h98237h42");
 		
-		var jksResource = new ClassPathResource("keystores/algafood.jks");
-		var keystorePass = "123456";
-		var keyPairAlias = "algafood";
+		var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
+		var keystorePass = jwtKeyStoreProperties.getPassword();
+		var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
+		
 		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keystorePass.toCharArray());
-		var keyPair = keyStoreKeyFactory.getKeyPair("algafood");
+		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
 		
 		jwtAccessTokenConverter.setKeyPair(keyPair);
 		
