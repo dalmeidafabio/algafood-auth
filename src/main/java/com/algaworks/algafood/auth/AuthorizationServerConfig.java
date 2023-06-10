@@ -80,6 +80,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		
 		security.checkTokenAccess("permitAll") //Permite tudo
 		//security.checkTokenAccess("isAuthenticated") //Quem estiver autenticado pode checar token
+			.tokenKeyAccess("permitAll")
 			.allowFormAuthenticationForClients();
 	}
 	
