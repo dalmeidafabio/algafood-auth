@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 @Configuration
 @EnableAuthorizationServer
@@ -90,8 +92,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey("ijh5o23jh4o5inuh2345iun354nh3458hn12543198h4329h98237h42");
+		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
+		//jwtAccessTokenConverter.setSigningKey("ijh5o23jh4o5inuh2345iun354nh3458hn12543198h4329h98237h42");
+		
+		var jksResource = new ClassPathResource("keystores/algafood.jks");
+		var keystorePass = "123456";
+		var keyPairAlias = "algafood";
+		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keystorePass.toCharArray());
+		var keyPair = keyStoreKeyFactory.getKeyPair("algafood");
+		
+		jwtAccessTokenConverter.setKeyPair(keyPair);
 		
 		return jwtAccessTokenConverter;
 	}
