@@ -99,6 +99,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.userDetailsService(userDetailsService)
 			.reuseRefreshTokens(false) //não permitir a reutilização do refresh token
 			.accessTokenConverter(jwtAccessTokenConverter())
+			.tokenEnhancer(enhancerChain)
 			.approvalStore(approvalStore(endpoints.getTokenStore()))
 			.tokenGranter(tokenGranter(endpoints));
 	}
